@@ -1,0 +1,5 @@
+name: "runeql-data update pr"
+description: "Creates a pull request on runeql-data update->main"
+runs:
+  using: "node12"
+  main: "index.js"
