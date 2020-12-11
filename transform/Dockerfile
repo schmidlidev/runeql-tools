@@ -1,8 +1,6 @@
 FROM python:3
 
-RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get install -y git
+WORKDIR /transform
 
 COPY requirements.txt .
 RUN pip install -r requirements.txt

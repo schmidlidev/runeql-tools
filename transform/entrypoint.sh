@@ -4,6 +4,8 @@ set -u  # script fails if trying to access to an undefined variable
 
 timestamp=`date +%Y-%m-%d_%H:%M:%S`
 
+cd /transform
+
 git config --global user.email "schmidlidev@gmail.com"
 git config --global user.name "schmidlidev"
 
@@ -11,10 +13,10 @@ git clone --single-branch --branch testbranch --depth 1 https://github.com/schmi
 git clone --single-branch --branch updatetest --depth 1 https://github.com/schmidlidev/osrsbox-db.git 
 
 echo "Executing data transformer"
-python item_transformer.py
+python /transform/item_transformer.py
 
 echo "Committing data to runeql-data"
-cd runeql-data/
+cd /transform/runeql-data/
 git remote set-url origin https://schmidlidev:${RUNEQL_DATA_LOAD}@github.com/schmidlidev/runeql-data.git
 git add .
 git status
