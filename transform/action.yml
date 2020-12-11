@@ -1,0 +1,7 @@
+name: "runeql-transform"
+description: "Pull latest osrsbox data, transform it, and push to runeql data repo."
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  env:
+    - ${{ secrets.RUNEQL_DATA_PUSH }}
