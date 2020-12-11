@@ -9,8 +9,8 @@ cd /transform
 git config --global user.email "schmidlidev@gmail.com"
 git config --global user.name "schmidlidev"
 
-git clone --single-branch --branch testbranch --depth 1 https://github.com/schmidlidev/runeql-data.git
-git clone --single-branch --branch updatetest --depth 1 https://github.com/schmidlidev/osrsbox-db.git 
+git clone --single-branch --branch update --depth 1 https://github.com/schmidlidev/runeql-data.git
+git clone --single-branch --branch master --depth 1 https://github.com/schmidlidev/osrsbox-db.git 
 
 echo "Executing data transformer"
 python /transform/item_transformer.py
@@ -20,5 +20,5 @@ cd /transform/runeql-data/
 git remote set-url origin https://schmidlidev:${RUNEQL_DATA_LOAD}@github.com/schmidlidev/runeql-data.git
 git add .
 git status
-git commit -m "Update ${timestamp}"
+git commit -m "Data Update ${timestamp}"
 git push --set-upstream origin testbranch
