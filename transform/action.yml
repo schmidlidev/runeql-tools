@@ -3,5 +3,3 @@ description: "Pull latest osrsbox data, transform it, and push to runeql data re
 runs:
   using: "docker"
   image: "Dockerfile"
-  env:
-    - ${{ secrets.RUNEQL_DATA_PUSH }}
