@@ -1,3 +1,4 @@
+const core = require("@actions/core");
 const { Octokit } = require("@octokit/core");
 
 const octokit = new Octokit({
@@ -14,4 +15,7 @@ octokit
   })
   .then((res) => {
     console.log(res);
+  })
+  .catch((err) => {
+    console.log(err);
   });
