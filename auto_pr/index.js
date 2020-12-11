@@ -1,4 +1,4 @@
-import { Octokit } from "@octokit/core";
+const { Octokit } = require("@octokit/core");
 
 const octokit = new Octokit({
   auth: process.env.RUNEQL_DATA_PUSH,
