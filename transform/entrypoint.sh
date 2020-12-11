@@ -21,4 +21,4 @@ git remote set-url origin https://schmidlidev:${RUNEQL_DATA_LOAD}@github.com/sch
 git add .
 git status
 git commit -m "Data Update ${timestamp}"
-git push --set-upstream origin testbranch
+git push --set-upstream origin update
