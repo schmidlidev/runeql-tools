@@ -9,4 +9,4 @@ COPY item_transformer.py .
 COPY entrypoint.sh .
 
 RUN chmod +x entrypoint.sh
-ENTRYPOINT [ "/entrypoint.sh" ]
+ENTRYPOINT [ "/transform/entrypoint.sh" ]
