@@ -11,5 +11,6 @@
   "license": "ISC",
   "dependencies": {
     "@octokit/core": "^3.2.4"
-  }
+  },
+  "type": "module"
 }
