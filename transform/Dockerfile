@@ -1,11 +1,11 @@
-FROM python:3
+FROM python:3.9.0-slim
 
 WORKDIR /transform
 
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY item_transformer.py .
+COPY transform_items.py .
 COPY entrypoint.sh .
 
 RUN chmod +x entrypoint.sh
