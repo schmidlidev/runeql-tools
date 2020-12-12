@@ -46,6 +46,7 @@ def transform_items(input_path, output_path):
         item["value"] = item["cost"]
         item["quest"] = item["quest_item"]
         item["tradeable_ge"] = item["tradeable_on_ge"]
+        item["qualified_name"] = item["wiki_name"]
 
         # Transform
         if item["highalch"] or item["lowalch"]:
@@ -89,6 +90,7 @@ def transform_items(input_path, output_path):
         KEYS = [
             "id",
             "name",
+            "qualified_name",
             "members",
             "tradeable",
             "stackable",
@@ -103,7 +105,6 @@ def transform_items(input_path, output_path):
             "release_date",
             "examine",
             "icon",
-            "wiki_name",
             "wiki_url",
             "equipment",
         ]
