@@ -1,7 +1,7 @@
 import { Octokit } from "@octokit/core";
 
 const octokit = new Octokit({
-  auth: process.env.RUNEQL_DATA_PUSH,
+  auth: process.env.RUNEQL_BOT_KEY,
 });
 
 // Create PR
