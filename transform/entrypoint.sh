@@ -12,8 +12,9 @@ git config --global user.name "schmidlidev"
 git clone --single-branch --branch update --depth 1 https://github.com/schmidlidev/runeql-data.git
 git clone --single-branch --branch master --depth 1 https://github.com/schmidlidev/osrsbox-db.git 
 
+rm -rf /transform/runeql-data/items/
 echo "Executing data transformer"
-python /transform/item_transformer.py
+python /transform/item_transformer.py --input /transform/osrsbox-db/docs/items/ --output /transform/runeql-data/items/
 
 echo "Committing data to runeql-data"
 cd /transform/runeql-data/

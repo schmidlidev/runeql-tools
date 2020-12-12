@@ -22,7 +22,7 @@ def requirements_to_list(requirements):
 
 
 def transform_items(input_path, output_path):
-    files = glob.glob(input_path)
+    files = glob.glob(os.path.join(input_path, "*.json"))
     progress_bar = ChargingBar(
         max=len(files), suffix="[%(index)d/%(max)d] %(percent).1f%%"
     )
@@ -34,9 +34,12 @@ def transform_items(input_path, output_path):
         with open(filepath, "r") as f:
             item = json.load(f)
 
+        # Filter out 'fake' items
         if item["id"] in EXCLUDE_IDS:
             continue
         if item["duplicate"] or item["noted"] or item["stacked"] or item["placeholder"]:
+            continue
+        if not item["wiki_name"]:
             continue
 
         # Translate
@@ -125,7 +128,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     input_path = args.input
-    output_path = args.output or "./items/"
+    output_path = args.output
 
     transform_items(input_path, output_path)
 
