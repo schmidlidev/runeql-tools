@@ -25,3 +25,4 @@ res = await octokit.request(
     reviewers: ["schmidlidev"],
   }
 );
+console.log(res);
