@@ -16,7 +16,7 @@ console.log(res);
 let prNumber = res.data.number;
 
 // Request PR review
-let res = await octokit.request(
+res = await octokit.request(
   "POST /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers",
   {
     owner: "schmidlidev",
