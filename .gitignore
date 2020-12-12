@@ -140,4 +140,4 @@ cython_debug/
 .DS_Store
 .vscode/
 node_modules/
-transformed_items/
+items/
