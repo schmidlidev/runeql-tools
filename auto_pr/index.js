@@ -4,6 +4,7 @@ const octokit = new Octokit({
   auth: process.env.RUNEQL_DATA_PUSH,
 });
 
+// Create PR
 let res = await octokit.request("POST /repos/{owner}/{repo}/pulls", {
   owner: "schmidlidev",
   repo: "runeql-data",
@@ -11,5 +12,16 @@ let res = await octokit.request("POST /repos/{owner}/{repo}/pulls", {
   base: "main",
   title: "OSRSBOX Data Update",
 });
-
 console.log(res);
+let prNumber = res.data.number;
+
+// Request PR review
+let res = await octokit.request(
+  "POST /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers",
+  {
+    owner: "schmidlidev",
+    repo: "runeql-data",
+    pull_number: prNumber,
+    reviewers: ["schmidlidev"],
+  }
+);
