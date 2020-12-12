@@ -14,7 +14,7 @@ git clone --single-branch --branch master --depth 1 https://github.com/schmidlid
 
 rm -rf /transform/runeql-data/items/
 echo "Executing data transformer"
-python /transform/transform_items.py --input /transform/osrsbox-db/docs/items/ --output /transform/runeql-data/items/
+python /transform/transform_items.py --input /transform/osrsbox-db/docs/items-json/ --output /transform/runeql-data/items/
 
 echo "Committing data to runeql-data"
 cd /transform/runeql-data/
