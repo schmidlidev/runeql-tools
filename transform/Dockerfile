@@ -7,7 +7,8 @@ RUN apt-get update && apt-get install -y git
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY transform_items.py .
+COPY transformers/ transformers/
+COPY transform.py .
 COPY entrypoint.sh .
 
 RUN chmod +x entrypoint.sh

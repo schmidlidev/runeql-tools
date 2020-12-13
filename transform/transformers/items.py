@@ -1,11 +1,12 @@
 import glob
 import json
-from pathlib import Path
 import os
+import shutil
 import sys
 
-import argparse
 from progress.bar import ChargingBar
+
+from transformers import util
 
 EXCLUDE_IDS = [617, 8890]  # Coins(Shilo Village)  # Coins(Mage Training Arena)
 
@@ -21,13 +22,27 @@ def requirements_to_list(requirements):
     return new_requirements
 
 
-def transform_items(input_path, output_path):
+def getCategory(item):
+    weapon = item.get("weapon", {})
+    # type = weapon["weapon_type"]
+    stances = weapon.get("stances", [])
+
+    for stance in stances:
+        del stance["experience"]
+        del stance["boosts"]
+
+    return {"name": weapon["weapon_type"], "stances": stances}
+
+
+def transform(input_path, output_path):
+    util.prepare_workspace(output_path)
+    print("Transforming items")
+
     files = glob.glob(os.path.join(input_path, "*.json"))
     progress_bar = ChargingBar(
         max=len(files), suffix="[%(index)d/%(max)d] %(percent).1f%%"
     )
 
-    print("Transforming items")
     for filepath in files:
         progress_bar.next()
 
@@ -112,25 +127,8 @@ def transform_items(input_path, output_path):
         # Drop keys with None value
         item = {key: item[key] for key in KEYS if item.get(key) is not None}
 
-        Path.mkdir(Path(output_path), exist_ok=True)
         write_path = os.path.join(output_path, os.path.basename(filepath))
         with open(write_path, "w") as f:
             f.write(json.dumps(item))
 
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--input", help="Directory of item data to transform", required=True
-    )
-    parser.add_argument(
-        "--output", help="Output directory to dump transformed data", default="./items/"
-    )
-    args = parser.parse_args()
-
-    input_path = args.input
-    output_path = args.output
-
-    transform_items(input_path, output_path)
-
-    print("\nCompleted.")
+    print(f"\nGenerated {len(glob.glob(os.path.join(output_path, '*.json')))} items")
