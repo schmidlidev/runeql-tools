@@ -12,7 +12,7 @@ EXCLUDE_IDS = [617, 8890]  # Coins(Shilo Village)  # Coins(Mage Training Arena)
 
 def requirements_to_list(requirements):
     if not requirements:
-        return None
+        return []
 
     new_requirements = []
     for key, value in requirements.items():
