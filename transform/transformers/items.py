@@ -1,10 +1,5 @@
-import glob
 import json
 import os
-import shutil
-import sys
-
-from progress.bar import ChargingBar
 
 from transformers import util
 
@@ -24,7 +19,6 @@ def requirements_to_list(requirements):
 
 def getCategory(item):
     weapon = item.get("weapon", {})
-    # type = weapon["weapon_type"]
     stances = weapon.get("stances", [])
 
     for stance in stances:
@@ -38,13 +32,11 @@ def transform(input_path, output_path):
     util.prepare_workspace(output_path)
     print("Transforming items")
 
-    files = glob.glob(os.path.join(input_path, "*.json"))
-    progress_bar = ChargingBar(
-        max=len(files), suffix="[%(index)d/%(max)d] %(percent).1f%%"
-    )
+    files = util.getFiles(input_path)
+    bar = util.createProgressBar(len(files))
 
     for filepath in files:
-        progress_bar.next()
+        bar.next()
 
         with open(filepath, "r") as f:
             item = json.load(f)
@@ -131,4 +123,4 @@ def transform(input_path, output_path):
         with open(write_path, "w") as f:
             f.write(json.dumps(item))
 
-    print(f"\nGenerated {len(glob.glob(os.path.join(output_path, '*.json')))} items")
+    print(f"\nGenerated {len(util.getFiles(output_path))} items")
