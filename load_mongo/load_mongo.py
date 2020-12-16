@@ -30,7 +30,9 @@ if __name__ == "__main__":
         help="MongoDB URI",
         default="mongodb://localhost:27017/",
     )
-    parser.add_argument("--input", help="Directory of data to upload", required=True)
+    parser.add_argument(
+        "--input", help="Directory of data to upload", default="./runeql-data"
+    )
     parser.add_argument(
         "--collection", help="Name of a single collection to load", default="all"
     )
