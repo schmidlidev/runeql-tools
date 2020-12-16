@@ -31,6 +31,9 @@ if __name__ == "__main__":
         default="mongodb://localhost:27017/",
     )
     parser.add_argument("--input", help="Directory of data to upload", required=True)
+    parser.add_argument(
+        "--collection", help="Name of a single collection to load", default="all"
+    )
     args = parser.parse_args()
 
     print("Connecting to mongodb")
@@ -38,16 +41,19 @@ if __name__ == "__main__":
     db = client["osrs"]
 
     # Monsters
-    files = glob.glob(os.path.join(Path(args.input), "monsters/*.json"))
-    upsert_many(files, "monsters", "id")
+    if args.collection == "monsters" or args.collection == "all":
+        files = glob.glob(os.path.join(Path(args.input), "monsters/*.json"))
+        upsert_many(files, "monsters", "id")
 
     # Weapon Categories
-    files = glob.glob(os.path.join(Path(args.input), "weaponCategories/*.json"))
-    upsert_many(files, "weaponCategories", "name")
+    if args.collection == "weaponCategories" or args.collection == "all":
+        files = glob.glob(os.path.join(Path(args.input), "weaponCategories/*.json"))
+        upsert_many(files, "weaponCategories", "name")
 
     # Items
-    files = glob.glob(os.path.join(Path(args.input), "items/*.json"))
-    upsert_many(files, "items", "id")
+    if args.collection == "items" or args.collection == "all":
+        files = glob.glob(os.path.join(Path(args.input), "items/*.json"))
+        upsert_many(files, "items", "id")
 
     client.close()
     print("Completed.")
