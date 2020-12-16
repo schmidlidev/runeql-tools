@@ -17,13 +17,17 @@ def buildQuantity(quantity, monster):
     try:
         if "," in quantity:  # List
             quantities = [int(q) for q in quantity.split(",")]
-            return {"quantities": quantities}
+            return {"__typename": "ItemDropQuantityList", "quantities": quantities}
 
         if "-" in quantity:  # Range
             _range = quantity.split("-")
-            return {"min": int(_range[0]), "max": int(_range[1])}
+            return {
+                "__typename": "ItemDropQuantityRange",
+                "min": int(_range[0]),
+                "max": int(_range[1]),
+            }
 
-        return {"quantity": int(quantity)}
+        return {"__typename": "ItemDropQuantityScalar", "quantity": int(quantity)}
 
     except:
         print(
@@ -106,7 +110,7 @@ def transform(input_path, output_path):
             "release_date",
             "attributes",
             "size",
-            "aggresive",
+            "aggressive",
             "poisonous",
             "immune_poison",
             "immune_venom",
