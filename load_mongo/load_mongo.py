@@ -37,6 +37,10 @@ if __name__ == "__main__":
     client = MongoClient(args.mongo_uri)
     db = client["osrs"]
 
+    # Monsters
+    files = glob.glob(os.path.join(Path(args.input), "monsters/*.json"))
+    upsert_many(files, "monsters", "id")
+
     # Weapon Categories
     files = glob.glob(os.path.join(Path(args.input), "weaponCategories/*.json"))
     upsert_many(files, "weaponCategories", "name")
