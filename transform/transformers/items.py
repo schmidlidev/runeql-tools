@@ -1,4 +1,3 @@
-import json
 import os
 
 from transformers import util
@@ -6,7 +5,7 @@ from transformers import util
 EXCLUDE_IDS = [617, 8890]  # Coins(Shilo Village)  # Coins(Mage Training Arena)
 
 
-def requirements_to_list(requirements):
+def buildRequirements(requirements):
     if not requirements:
         return []
 
@@ -33,13 +32,10 @@ def transform(input_path, output_path):
     print("Transforming items")
 
     files = util.getFiles(input_path)
-    bar = util.createProgressBar(len(files))
+    bar = util.createProgressBar(len(util.getFilenames(input_path)))
 
-    for filepath in files:
+    for (item, filename) in files:
         bar.next()
-
-        with open(filepath, "r") as f:
-            item = json.load(f)
 
         # Filter out 'fake' items
         if item["id"] in EXCLUDE_IDS:
@@ -62,7 +58,7 @@ def transform(input_path, output_path):
         if item["equipment"]:
             item["equipment"] = {
                 "slot": item["equipment"]["slot"],
-                "requirements": requirements_to_list(item["equipment"]["requirements"]),
+                "requirements": buildRequirements(item["equipment"]["requirements"]),
                 "bonuses": {
                     "attack": {
                         "stab": item["equipment"]["attack_stab"],
@@ -98,19 +94,19 @@ def transform(input_path, output_path):
             "id",
             "name",
             "qualified_name",
+            "examine",
             "members",
+            "release_date",
+            "quest",
+            "weight",
+            "value",
+            "alchemy",
             "tradeable",
             "stackable",
             "noteable",
             "equipable",
-            "value",
-            "alchemy",
             "tradeable_ge",
             "buy_limit",
-            "weight",
-            "quest",
-            "release_date",
-            "examine",
             "icon",
             "wiki_url",
             "equipment",
@@ -119,8 +115,6 @@ def transform(input_path, output_path):
         # Drop keys with None value
         item = {key: item[key] for key in KEYS if item.get(key) is not None}
 
-        write_path = os.path.join(output_path, os.path.basename(filepath))
-        with open(write_path, "w") as f:
-            f.write(json.dumps(item))
+        util.writeFile(item, os.path.join(output_path, filename))
 
-    print(f"\nGenerated {len(util.getFiles(output_path))} items")
+    print(f"\nGenerated {len(util.getFilenames(output_path))} items")

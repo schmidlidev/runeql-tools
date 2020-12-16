@@ -3,6 +3,7 @@ import os
 from pathlib import Path
 
 from transformers import items
+from transformers import monsters
 from transformers import weapon_categories
 
 if __name__ == "__main__":
@@ -22,13 +23,17 @@ if __name__ == "__main__":
 
     Path.mkdir(Path(output_path), exist_ok=True)
 
+    items.transform(
+        os.path.join(input_path, "items-json/"),
+        os.path.join(output_path, "items/"),
+    )
     weapon_categories.transform(
         os.path.join(input_path, "items-json/"),
         os.path.join(output_path, "weaponCategories/"),
     )
-    items.transform(
-        os.path.join(input_path, "items-json/"),
-        os.path.join(output_path, "items/"),
+    monsters.transform(
+        os.path.join(input_path, "monsters-json/"),
+        os.path.join(output_path, "monsters/"),
     )
 
     print("Completed.")
