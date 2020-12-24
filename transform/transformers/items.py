@@ -5,7 +5,7 @@ from transformers import util
 EXCLUDE_IDS = [617, 8890]  # Coins(Shilo Village)  # Coins(Mage Training Arena)
 
 
-def buildRequirements(requirements):
+def build_requirements(requirements):
     if not requirements:
         return []
 
@@ -16,15 +16,17 @@ def buildRequirements(requirements):
     return new_requirements
 
 
-def getCategory(item):
-    weapon = item.get("weapon", {})
-    stances = weapon.get("stances", [])
+def translate_slot(slot):
+    if slot == "2h":
+        return "twohanded"
 
-    for stance in stances:
-        del stance["experience"]
-        del stance["boosts"]
+    if slot == "shield":
+        return "offhand"
 
-    return {"name": weapon["weapon_type"], "stances": stances}
+    if slot == "ammo":
+        return "ammunition"
+
+    return slot
 
 
 def transform(input_path, output_path):
@@ -57,8 +59,8 @@ def transform(input_path, output_path):
 
         if item["equipment"]:
             item["equipment"] = {
-                "slot": item["equipment"]["slot"],
-                "requirements": buildRequirements(item["equipment"]["requirements"]),
+                "slot": translate_slot(item["equipment"]["slot"]),
+                "requirements": build_requirements(item["equipment"]["requirements"]),
                 "bonuses": {
                     "attack": {
                         "stab": item["equipment"]["attack_stab"],
