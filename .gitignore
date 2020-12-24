@@ -141,3 +141,4 @@ cython_debug/
 .vscode/
 node_modules/
 runeql-data/
+local/
