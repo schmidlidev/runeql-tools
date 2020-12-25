@@ -9,7 +9,7 @@ from pymongo import MongoClient
 
 
 def upsert_many(files, collection, identity_key):
-    print(f"Upserting data for collection {collection}")
+    print(f"Upserting data for collection {collection}, {len(files)} objects")
     bar = ChargingBar(max=len(files), suffix="[%(index)d/%(max)d] %(percent).1f%%")
 
     for filepath in files:
