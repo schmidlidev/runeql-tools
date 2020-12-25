@@ -1,4 +1,5 @@
 # runeql-tools
+
 Tools to support [RuneQL](https://github.com/schmidlidev/runeql)
 
 ## Tools
@@ -11,6 +12,6 @@ Python tool and GitHub Action that transforms the shape of [OSRSBox](https://git
 
 Javascript GitHub Action used for automatically opening a pull request in [runeql-data](https://github.com/schmidlidev/runeql-data) when new data has been updated.
 
-### Load Mongo
+### Load Data
 
-Python tool that upserts the output data of Transform to MongoDB
+Python tool that upserts the output data of Transform to the RuneQL database.
