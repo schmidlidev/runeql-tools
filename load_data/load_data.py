@@ -20,7 +20,7 @@ def upsert_many(files, collection, identity_key):
         db[collection].replace_one(
             {identity_key: document[identity_key]}, document, upsert=True
         )
-    print("\n")
+    bar.finish()
 
 
 if __name__ == "__main__":
