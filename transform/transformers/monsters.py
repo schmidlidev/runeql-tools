@@ -4,6 +4,12 @@ import os
 from transformers import util
 
 
+def translate_slayer_categories(categories):
+    # The reason for this is that in our schema slayer category is an enum,
+    # and object names in GraphQL cannot contain spaces
+    return [category.replace(" ", "_") for category in categories]
+
+
 def buildQuantity(quantity, monster):
     # monster param used purely for debug output
 
@@ -62,7 +68,7 @@ def transform(input_path, output_path):
                 "masters": monster["slayer_masters"],
                 "level": monster["slayer_level"],
                 "xp": monster["slayer_xp"],
-                "categories": monster["category"],
+                "categories": translate_slayer_categories(monster["category"]),
             }
 
         monster["levels"] = {
@@ -77,7 +83,7 @@ def transform(input_path, output_path):
 
         monster["bonuses"] = {
             "attack": {
-                "melee": monster["attack_accuracy"],
+                "melee": monster["attack_bonus"],
                 "ranged": monster["attack_ranged"],
                 "magic": monster["attack_magic"],
             },
@@ -89,9 +95,9 @@ def transform(input_path, output_path):
                 "ranged": monster["defence_ranged"],
             },
             "strength": {
-                "melee": monster["melee_strength"],
-                "ranged": monster["ranged_strength"],
-                "magic": monster["magic_damage"],
+                "melee": monster["strength_bonus"],
+                "ranged": monster["ranged_bonus"],
+                "magic": monster["magic_bonus"],
             },
         }
 
@@ -112,6 +118,7 @@ def transform(input_path, output_path):
             "size",
             "aggressive",
             "poisonous",
+            "venomous",
             "immune_poison",
             "immune_venom",
             "max_hit",
