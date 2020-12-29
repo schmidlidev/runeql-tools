@@ -104,7 +104,6 @@ def transform(input_path, output_path):
         for drop in monster["drops"]:
             drop["quantity"] = buildQuantity(drop["quantity"], monster)
             del drop["name"]
-            del drop["drop_requirements"]
 
         # Filter keys
         KEYS = [
